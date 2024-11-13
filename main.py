@@ -15,7 +15,9 @@ def utility_processor():
 
 import tmdb_client
 
-
+@app.route("/movie/<movie_id>")
+def movie_details(movie_id):
+    return render_template("movie_details.html")
 
 
 
