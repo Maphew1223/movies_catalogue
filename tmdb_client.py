@@ -1,4 +1,5 @@
 import requests
+API_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwOTY0ZjViYzRmNjBjZjY0NjNkOGE0MTdhNTVhMTA0ZiIsIm5iZiI6MTczMTUwMDI1My43MjM5MDEzLCJzdWIiOiI2NzM0OTU4NTljMWEyMzhkOGE5ZDQyMDciLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.isfdTuIjrT6A5JThEzfmiWvW124p5JThIfwWVeZQzeI"
 
 def get_popular_movies(list_type):
     endpoint = {
@@ -30,7 +31,6 @@ def get_movies(list_type, how_many):
     data = get_popular_movies(list_type)
     return data["results"][:how_many]
 
-API_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwOTY0ZjViYzRmNjBjZjY0NjNkOGE0MTdhNTVhMTA0ZiIsIm5iZiI6MTczMTUwMDI1My43MjM5MDEzLCJzdWIiOiI2NzM0OTU4NTljMWEyMzhkOGE5ZDQyMDciLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.isfdTuIjrT6A5JThEzfmiWvW124p5JThIfwWVeZQzeI"
 
 def get_single_movie(movie_id):
     endpoint = f"https://api.themoviedb.org/3/movie/{movie_id}"

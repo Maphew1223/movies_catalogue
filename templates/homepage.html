@@ -8,17 +8,15 @@
             <p class="lead">Znajdziesz tutaj tylko najlepsze tytuły!</p>
         </div>
     </div>
-    <div class="col-lg-12 mb-4">
-        <a href="{{ url_for('homepage', list_type="now_playing") }}" class="btn btn-outline-info">Now Playing</a>
-    </div>
-    <div class="col-lg-12 mb-4">
-        <a href="{{ url_for('homepage', list_type="popular") }}" class="btn btn-outline-info">Popular</a>
-    </div>
-    <div class="col-lg-12 mb-4">
-        <a href="{{ url_for('homepage', list_type="upcoming") }}" class="btn btn-outline-info">upcoming</a>
-    </div>
-    <div class="col-lg-12 mb-4">
-        <a href="{{ url_for('homepage', list_type="top_rated") }}" class="btn btn-outline-info">top_rated</a>
+    <div class="row">
+        <div class="col-lg-12 mb-4">
+            {% for list_type, label in list_types.items() %}
+                <a href="{{ url_for('homepage') }}?list_type={{ list_type }}" 
+                   class="btn {% if list_type == selected_list_type %}btn-info{% else %}btn-outline-info{% endif %}">
+                    {{ label }}
+                </a>
+            {% endfor %}
+        </div>
     </div>
     
     <div class="row">

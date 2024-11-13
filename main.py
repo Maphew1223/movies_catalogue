@@ -1,14 +1,21 @@
-from flask import Flask, render_template
-from flask import request
+from flask import Flask, render_template, request
 import tmdb_client
 
 app = Flask(__name__)
 
 @app.route('/')
 def homepage():
-    selected_list = request.args.get('list_type', 'popular')
-    movies = tmdb_client.get_movies(how_many=8, list_type=selected_list)
-    return render_template("homepage.html", movies=movies, current_list=selected_list)
+    list_types = {
+        'top_rated': 'Top rated',
+        'upcoming': 'Upcoming',
+        'popular': 'Popular',
+        'now_playing': 'Now Playing'
+    }
+    selected_list_type = request.args.get('list_type', 'popular')
+    if selected_list_type not in list_types:
+        selected_list_type = 'popular'
+    movies = tmdb_client.get_movies(how_many=8, list_type=selected_list_type)
+    return render_template("homepage.html", movies=movies, list_types=list_types, selected_list_type=selected_list_type)
 
 @app.context_processor
 def utility_processor():
