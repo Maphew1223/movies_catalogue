@@ -1,6 +1,7 @@
 import pytest
 from unittest.mock import Mock
 import requests
+from main import app
 
 
 from tmdb_client import (
@@ -86,3 +87,20 @@ def test_get_single_movie_cast(mock_requests_get, mock_api_token):
         "https://api.themoviedb.org/3/movie/1/credits",
         headers={"Authorization": f"Bearer {API_TOKEN}"}
     )
+
+@pytest.mark.parametrize("list_type", ["popular", "top_rated", "now_playing", "upcoming"])
+def test_homepage(monkeypatch, list_type):
+    expected_movies = [
+        {"id": i, "title": f"{list_type.title()} Movie {i}"}
+        for i in range(1, 3)
+    ]
+    
+    api_mock = Mock(return_value=expected_movies)
+    monkeypatch.setattr("tmdb_client.get_movies", api_mock)
+
+    with app.test_client() as client:
+        response = client.get(f"/?list_type={list_type}")
+
+        assert response.status_code == 200
+        api_mock.assert_called_once_with(how_many=8, list_type=list_type)
+
